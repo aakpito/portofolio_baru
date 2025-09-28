@@ -178,8 +178,15 @@
         // Data untuk semua proyek (SEMUA GAMBAR LOKAL TELAH DIGANTI DENGAN URL PUBLIK)
         const projects = {
             applications: [
+                // PROYEK BARU DITAMBAHKAN DI SINI
+                { 
+                    title: "Platform Kuis Interaktif (AI)", 
+                    description: "Masukkan link video YouTube, tonton materi, lalu uji pemahaman Anda!", 
+                    links: ["https://aplikasi-kuis-ai.vercel.app/"], 
+                    image: "Platform Kuis Interaktif AI.png", 
+                    isNew: true 
+                },
                 { title: "Platform Kritik & Masukan OVOP", description: "Sebuah platform untuk memberikan kritik dan masukan konstruktif terhadap program One Village One Product (OVOP) di NTT, bertujuan untuk evaluasi dan perbaikan program.", links: ["https://kritik-ovop.vercel.app/"], image: "https://images.unsplash.com/photo-1557804506-669a67965ba0?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB|fHx8fA%3D%3D", isNew: true },
-                // DIPERBAIKI: Mengganti URL gambar Chatbot yang rusak dengan URL baru
                 { 
                     title: "Chatbot RPJMD NTT 2025-2029", 
                     description: "Sebuah aplikasi chatbot interaktif yang dirancang untuk menjawab pertanyaan seputar dokumen Rencana Pembangunan Jangka Menengah Daerah (RPJMD) Provinsi NTT.", 
@@ -211,7 +218,6 @@
                     links: ["https://presentasi-simbina.vercel.app/"], 
                     image: "SIMBINA-DUKCAPIL NTT.png" 
                 },
-                // Perbaikan: Mengganti kutip tunggal dalam string 'TRIPIKA KABALA MEDAN' menjadi kutip ganda/di-escape
                 { title: "Proyek 'Inovasi: \"TRIPIKA KABALA MEDAN\"'", description: "Presentasi proyek perubahan Peningkatan Koordinasi Penyelenggaraan Keamanan dan Ketertiban Masyarakat", links: ["https://presentasi-drimianto.vercel.app/"], image: "inovasi TRIPIKA KABALA MEDAN.png" }
             ],
             videos: [
@@ -227,7 +233,6 @@
         // Fungsi untuk membuat kartu proyek
         function createProjectCard(project) {
             const card = document.createElement('div');
-            // Menyesuaikan dengan gaya grid kartu
             card.className = 'project-card bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl hover:scale-[1.02]'; 
             
             let linksHTML = project.links.map((link, index) => {
@@ -251,11 +256,8 @@
                         </a>`;
             }).join('<span class="mx-2 text-slate-300"></span>');
             
-            // Mengambil URL gambar yang tepat
             const imageUrl = project.image.startsWith('http') || project.image.endsWith('.png') || project.image.endsWith('.jpg') ? project.image : `https://placehold.co/512x256/e2e8f0/64748b?text=${project.title.substring(0, 15).replace(/\s/g, '+')}`;
-
-            // Mengganti penggunaan imageClasses lama dengan styling inline sederhana jika ada
-            const imageStyle = project.imageClasses && project.imageClasses.includes('h-auto') ? 'height: auto;' : 'height: 12rem;'; // 12rem = h-48
+            const imageStyle = project.imageClasses && project.imageClasses.includes('h-auto') ? 'height: auto;' : 'height: 12rem;';
             
             card.innerHTML = `
                 <div class="bg-slate-200">
@@ -275,15 +277,12 @@
             return card;
         }
 
-        // Memuat proyek ke dalam DOM
         document.addEventListener('DOMContentLoaded', () => {
-            // Target kontainer proyek yang sekarang menggunakan grid
             const appContainer = document.querySelector('#aplikasi .grid');
             const presentationContainer = document.querySelector('#presentasi .grid');
             const videoContainer = document.querySelector('#video .grid');
             const analysisContainer = document.querySelector('#analisis .grid');
             
-            // Mengisi container dengan data dari objek projects
             projects.applications.forEach(project => {
                 appContainer.appendChild(createProjectCard(project));
             });
@@ -296,7 +295,7 @@
             projects.analysis.forEach(project => {
                 analysisContainer.appendChild(createProjectCard(project));
             });
-            // --- Logic Animasi ---
+            
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -310,7 +309,7 @@
             document.querySelectorAll('.project-card, .fade-in-section').forEach(el => {
                 observer.observe(el);
             });
-            // --- Logic Pemberitahuan ---
+            
             const notificationToast = document.getElementById('notification-toast');
             const closeNotificationBtn = document.getElementById('close-notification');
             const notificationVersion = 'update_20251001'; 
@@ -320,7 +319,7 @@
                 setTimeout(() => {
                     notificationToast.classList.remove('hidden');
                     notificationToast.classList.add('flex');
-                }, 2000); // Tunda 2 detik
+                }, 2000); 
             }
             closeNotificationBtn.addEventListener('click', () => {
                 notificationToast.style.display = 'none';
